@@ -4,3 +4,4 @@ node_modules/*
 password
 magic_numbers
 magic_numbers/*
+models/last_run
