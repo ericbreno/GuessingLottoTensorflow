@@ -1,0 +1,16 @@
+{
+  "name": "tensorflor_maybe",
+  "version": "1.0.0",
+  "description": "Learning about tensorflow",
+  "main": "index.js",
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.13.5",
+    "@tensorflow/tfjs-node": "^0.1.21"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ericbreno",
+  "license": "ISC"
+}

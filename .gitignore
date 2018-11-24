@@ -1,0 +1,6 @@
+data/full_analysis.json
+node_modules
+node_modules/*
+password
+magic_numbers
+magic_numbers/*
