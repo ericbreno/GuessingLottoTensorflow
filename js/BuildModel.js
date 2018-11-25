@@ -1,24 +1,22 @@
 const tf = require('@tensorflow/tfjs');
 
-const BuildModel = (layerWidth = 25, inputWidth = 25) => {
+const BuildModel = (layerWidth = 25, inputWidth = 25, layers = 100) => {
     const model = tf.sequential();
+
     model.add(tf.layers.dense({
-        units: layerWidth,
+        units: inputWidth, // first and last must have input size as width
         inputShape: [inputWidth]
     }));
 
-    model.add(tf.layers.dense({
-        units: layerWidth,
-        inputShape: [inputWidth]
-    }));
+    for (let i = 0; i < layers; i++) {
+        model.add(tf.layers.dense({
+            units: layerWidth,
+            inputShape: [inputWidth]
+        }));
+    }
 
     model.add(tf.layers.dense({
-        units: layerWidth,
-        inputShape: [inputWidth]
-    }));
-
-    model.add(tf.layers.dense({
-        units: layerWidth,
+        units: inputWidth, // first and last must have input size as width
         inputShape: [inputWidth]
     }));
 

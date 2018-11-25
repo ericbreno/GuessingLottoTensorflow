@@ -4,16 +4,24 @@ const { buildTrainingSample, getSample, checkAccuracy } = require('./js/Training
 
 require('@tensorflow/tfjs-node');
 
-const init = 400, end = 1500, epochs = 50, stepsPerEpoch = 10;
+const firstRes = 1000,
+    lastRes = 1500,
+    epochs = 1000,
+    stepsPerEpoch = 1,
+    layerWidth = 25,
+    inputWidth = 25,
+    layers = 500;
 
-const model = BuildModel();
-const [xs, ys] = buildTrainingSample(init, end);
+const model = BuildModel(layerWidth, inputWidth, layers);
+const [inputs, outputs] = buildTrainingSample(firstRes, lastRes);
 
 // Train the model using the data.
-model.fit(xs, ys, { epochs, stepsPerEpoch }).then(() => {
+model.fit(inputs, outputs, { epochs, stepsPerEpoch }).then(() => {
+    const resultToPredict = lastRes + 1;
+    console.log('Predicting for:', resultToPredict);
     // Use the model to do inference on a data point the model hasn't seen before:
-    const [xx, yy] = getSample(end + 1, end + 2);
-    const predicted = model.predict(tf.tensor2d(xx, [1, 25]));
+    const [inputToPredict, expectedPredict] = getSample(resultToPredict, resultToPredict + 1);
+    const predicted = model.predict(tf.tensor2d(inputToPredict, [1, 25]));
 
     model.save('file://models/last_run');
 
@@ -21,8 +29,7 @@ model.fit(xs, ys, { epochs, stepsPerEpoch }).then(() => {
     console.log(freqPropPredicted);
 
     // checking accuracy
-    const [xxg, yyg] = getSample(end, end + 1);
-    const guessed = yyg[0].map((v, i) => v < freqPropPredicted[i] ? i + 1 : 0);
-    checkAccuracy(guessed, end);
+    const guessed = expectedPredict[0].map((v, i) => v < freqPropPredicted[i] ? i + 1 : 0);
+    checkAccuracy(guessed, resultToPredict);
 });
 
