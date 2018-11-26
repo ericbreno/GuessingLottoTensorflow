@@ -16,7 +16,7 @@ node testModel.js models/run_5k_500_layers/ 1500
 No guarantees if parameters are invalid ¯\\\_(ツ)\_/¯
 
 ### How to create your own model
-**Important:** Every new model is saved under directory `models/last_run` (git-ignored) purposely.
+**Important:** Every new model is saved under directory `models/last_run` (_git-ignored_ purposely).
 
 #### Fast setup (minimum)
 Change variables in `index.js` and voilá:
