@@ -1,35 +1,32 @@
-const tf = require('@tensorflow/tfjs');
 const { BuildModel } = require('./js/BuildModel');
-const { buildTrainingSample, getSample, checkAccuracy } = require('./js/TrainingHelper');
+const { buildTrainingSample } = require('./js/TrainingHelper');
+const { testPredict } = require('./js/RunPredict');
 
 require('@tensorflow/tfjs-node');
 
-const firstRes = 1000,
-    lastRes = 1500,
-    epochs = 1000,
-    stepsPerEpoch = 1,
+const
+    // Training sample limits, cannot be over 1500 neither under 2 (at least 5 recommended)
+    firstRes = 1200,
+    lastRes = 1400,
+
+    // Model core, number of middle layers added
+    layers = 50,
+
+    // Model params. Actually, should not change this, unless you're changing the 
+    // analysis sample and everything else. Our lotto has only 25 numbers (1-25).
     layerWidth = 25,
     inputWidth = 25,
-    layers = 500;
+
+    // Model fit. Training loops, basically.
+    epochs = 150,
+    stepsPerEpoch = 1;
 
 const model = BuildModel(layerWidth, inputWidth, layers);
 const [inputs, outputs] = buildTrainingSample(firstRes, lastRes);
 
 // Train the model using the data.
 model.fit(inputs, outputs, { epochs, stepsPerEpoch }).then(() => {
-    const resultToPredict = lastRes + 1;
-    console.log('Predicting for:', resultToPredict);
-    // Use the model to do inference on a data point the model hasn't seen before:
-    const [inputToPredict, expectedPredict] = getSample(resultToPredict, resultToPredict + 1);
-    const predicted = model.predict(tf.tensor2d(inputToPredict, [1, 25]));
-
     model.save('file://models/last_run');
-
-    const freqPropPredicted = predicted.dataSync();
-    console.log(freqPropPredicted);
-
-    // checking accuracy
-    const guessed = expectedPredict[0].map((v, i) => v < freqPropPredicted[i] ? i + 1 : 0);
-    checkAccuracy(guessed, resultToPredict);
+    
+    testPredict(model, lastRes + 1);
 });
-
