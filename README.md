@@ -1,5 +1,10 @@
 # Lotto Guesser, maybe
-Just learning about Artificial Intelligence with [Google TensorflowJS](https://js.tensorflow.org/)
+Just learning about Artificial Intelligence with [Google TensorflowJS](https://js.tensorflow.org/).  
+Training a model with lotto historical data and guessing results, just for fun.
+
+Ps: the data is already pre-processed by another project and grouped, etc. Maybe it's
+format seems weird, but somehow it makes sense.
+
 ### How to test a model
 ```
 node testModel.js {path_to_saved_model_directory} {resultToTestPredict}
