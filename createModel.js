@@ -19,7 +19,7 @@ const
 
     // Model fit. Training loops, basically.
     epochs = 150,
-    stepsPerEpoch = 1;
+    stepsPerEpoch = 10;
 
 const model = BuildModel(layerWidth, inputWidth, layers);
 const [inputs, outputs] = buildTrainingSample(firstRes, lastRes);
@@ -27,6 +27,6 @@ const [inputs, outputs] = buildTrainingSample(firstRes, lastRes);
 // Train the model using the data.
 model.fit(inputs, outputs, { epochs, stepsPerEpoch }).then(() => {
     model.save('file://models/last_run');
-    
+
     testPredict(model, lastRes + 1);
 });
