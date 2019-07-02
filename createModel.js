@@ -5,9 +5,9 @@ const { testPredict } = require('./js/RunPredict');
 require('@tensorflow/tfjs-node');
 
 const
-    // Training sample limits, cannot be over 1500 neither under 2 (at least 5 recommended)
-    firstRes = 1200,
-    lastRes = 1400,
+    // Training sample limits, cannot be over 1832 neither under 2 (at least 5 recommended)
+    firstRes = 1500,
+    lastRes = 1832,
 
     // Model core, number of middle layers added
     layers = 50,
@@ -18,8 +18,8 @@ const
     inputWidth = 25,
 
     // Model fit. Training loops, basically.
-    epochs = 150,
-    stepsPerEpoch = 10;
+    epochs = 200,
+    stepsPerEpoch = 20;
 
 const model = BuildModel(layerWidth, inputWidth, layers);
 const [inputs, outputs] = buildTrainingSample(firstRes, lastRes);
